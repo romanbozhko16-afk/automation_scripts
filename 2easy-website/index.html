@@ -64,11 +64,10 @@
     }
 
     .eyebrow {
-      display: inline-flex; align-items: center; gap: 12px;
+      display: inline-flex; align-items: center;
       font-size: 0.68rem; font-weight: 600; letter-spacing: 0.34em;
       text-transform: uppercase; color: var(--accent);
     }
-    .eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--accent); }
 
     .btn {
       position: relative; display: inline-flex; align-items: center; gap: 12px;
@@ -194,7 +193,6 @@
     section { position: relative; z-index: 2; padding: 120px 0; }
     .section-head { max-width: 680px; margin-bottom: 70px; }
     .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
-    .section-head.center .eyebrow::before { display: none; }
     .section-title { margin-top: 20px; font-size: clamp(1.7rem, 3.6vw, 2.6rem); }
     .section-title em { font-style: normal; color: var(--accent-hi); }
     .section-sub { margin-top: 18px; color: var(--silver); }
