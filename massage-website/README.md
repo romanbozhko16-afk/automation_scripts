@@ -17,22 +17,28 @@
 | Часы работы | Пн–Пт 9–19, Сб 10–16 | Реальный график (в разделе Contact и в JSON-LD) |
 | Цены и услуги | Типичные для США цены | Ваши реальные цены |
 | Отзывы | 3 примера (Sarah, James, Emily) | Реальные отзывы клиентов |
-| Фото | Серый блок «Your photo here» | Профессиональное фото (см. ниже) |
+| Фото | Блок «Your portrait here» | Профессиональное фото (см. ниже) |
+| Номер лицензии | `License № 00000` (в подвале сайта) | Реальный номер лицензии LMT |
+
+Стиль сайта — премиальный («частное массажное ателье»), и цены-заглушки поставлены
+под верхний сегмент рынка США ($110–220). Обязательно замените их на свои.
+Шрифты (Cormorant Garamond, EB Garamond, Jost) подгружаются автоматически с Google Fonts —
+ничего настраивать не нужно.
 
 ### Как вставить фото
 
 Положите фото (например `anna.jpg`) рядом с `index.html` и замените блок:
 
 ```html
-<div class="about-photo">
-  Your photo here<br>(replace with a professional portrait)
+<div class="portrait">
+  Your portrait here —<br>a professional photograph
 </div>
 ```
 
 на:
 
 ```html
-<div class="about-photo" style="background: url('anna.jpg') center/cover;"></div>
+<div class="portrait" style="background: url('anna.jpg') center/cover;"></div>
 ```
 
 ## Как бесплатно опубликовать (GitHub Pages)
