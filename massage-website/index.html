@@ -260,7 +260,7 @@
     .testimonials { background: var(--evergreen); color: var(--ivory); }
     .testimonials .section-title { color: var(--ivory); }
     .testimonials .section-sub { color: rgba(247, 243, 232, 0.66); }
-    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 52px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 52px 64px; max-width: 920px; margin: 0 auto; }
     .testimonial { text-align: center; }
     .testimonial .quote-mark {
       font-family: var(--display); font-size: 3rem; line-height: 1;
@@ -363,6 +363,7 @@
       .menu-card { padding: 30px 22px 36px; outline-offset: 4px; }
       .menu-grid { grid-template-columns: 1fr; column-gap: 0; }
       .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 44px; }
+      .testimonials-grid { grid-template-columns: 1fr; gap: 44px; }
       .portrait-frame { max-width: 320px; margin: 0 auto; }
       .standard { border-right: none; border-bottom: 1px solid var(--hairline); }
       .standard:last-child { border-bottom: none; }
@@ -652,6 +653,16 @@
             If you're pregnant and hurting, just go.
           </p>
           <div class="author">Anna</div>
+        </div>
+        <div class="testimonial">
+          <span class="quote-mark">“</span>
+          <p>
+            My shoulders and lower back were wrecked from years of physical
+            work. Tried the deep wellness massage once and now it's a regular
+            thing — she works out knots other places just rubbed over. Easy to
+            book by text, always starts on time, no fuss.
+          </p>
+          <div class="author">Eduard</div>
         </div>
       </div>
     </div>
