@@ -330,6 +330,40 @@
     .step .bar { position: absolute; left: 26px; right: 26px; bottom: 0; height: 2px; background: linear-gradient(90deg, var(--accent-hi), transparent); transform: scaleX(0); transform-origin: left; transition: transform 0.6s var(--ease); }
     .step:hover .bar { transform: scaleX(1); }
 
+    /* ===== testimonials ===== */
+    .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .quote-card {
+      --mx: 50%; --my: 50%;
+      position: relative; border-radius: 18px; padding: 34px 32px;
+      background: var(--carbon); border: 1px solid var(--line); overflow: hidden;
+      transition: transform 0.5s var(--ease), border-color 0.4s, box-shadow 0.5s var(--ease);
+      will-change: transform;
+    }
+    .quote-card::before {
+      content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s;
+      background: radial-gradient(400px circle at var(--mx) var(--my), rgba(79, 143, 232, 0.11), transparent 55%);
+      pointer-events: none;
+    }
+    .quote-card:hover { border-color: rgba(79, 143, 232, 0.45); box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45); }
+    .quote-card:hover::before { opacity: 1; }
+    .quote-card .qm {
+      font-family: var(--display); font-size: 2.2rem; line-height: 1;
+      background: linear-gradient(135deg, var(--accent-hi), var(--accent-lo));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      display: block; margin-bottom: 16px;
+    }
+    .quote-card p { color: var(--silver); font-size: 0.94rem; }
+    .quote-card .who { display: flex; align-items: center; gap: 14px; margin-top: 24px; }
+    .quote-card .ava {
+      width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+      display: grid; place-items: center; font-weight: 600; font-size: 0.85rem;
+      background: rgba(79, 143, 232, 0.14); color: var(--accent-hi);
+      border: 1px solid rgba(79, 143, 232, 0.35);
+    }
+    .quote-card .who .n { color: var(--platinum); font-weight: 500; font-size: 0.92rem; }
+    .quote-card .who .r { color: var(--silver); font-size: 0.78rem; }
+    .quotes-note { text-align: center; margin-top: 26px; font-size: 0.76rem; color: rgba(151, 148, 139, 0.55); }
+
     /* ===== CTA band ===== */
     .cta-band { padding: 0; }
     .cta-box {
@@ -393,6 +427,7 @@
       .contact-grid { grid-template-columns: 1fr; gap: 46px; }
       .cta-box { padding: 64px 26px; }
       .calc-box { grid-template-columns: 1fr; }
+      .quotes { grid-template-columns: 1fr; }
       .calc-controls { padding: 34px 26px; }
       .calc-result { border-left: none; border-top: 1px solid var(--line); padding: 40px 26px; }
       #glow { display: none; }
@@ -626,6 +661,68 @@
           <span class="bar"></span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section id="reviews">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">Client feedback</span>
+        <h2 class="section-title reveal" data-d="1">People stopped doing <em>boring work</em></h2>
+      </div>
+      <div class="quotes">
+        <article class="quote-card tilt reveal">
+          <span class="qm">“</span>
+          <p>
+            We were copying orders from Instagram into a spreadsheet by hand,
+            every single day. Now a bot does it in seconds and sends the
+            manager a summary each morning. I honestly forgot this task ever
+            existed.
+          </p>
+          <div class="who">
+            <span class="ava">DK</span>
+            <span><span class="n">Dmitry K.</span><br><span class="r">Owner, online store</span></span>
+          </div>
+        </article>
+        <article class="quote-card tilt reveal" data-d="1">
+          <span class="qm">“</span>
+          <p>
+            The AI assistant answers our clients at night and on weekends and
+            books them straight into the calendar. We used to lose those leads.
+            First month it paid for itself, easily.
+          </p>
+          <div class="who">
+            <span class="ava">OS</span>
+            <span><span class="n">Olga S.</span><br><span class="r">Beauty studio owner</span></span>
+          </div>
+        </article>
+        <article class="quote-card tilt reveal" data-d="1">
+          <span class="qm">“</span>
+          <p>
+            I expected a long IT project with meetings and delays. Instead we
+            had a working automation in a week. Invoices, reminders, and
+            reports now just happen. My team got about a day a week back.
+          </p>
+          <div class="who">
+            <span class="ava">MR</span>
+            <span><span class="n">Mike R.</span><br><span class="r">Operations manager, logistics</span></span>
+          </div>
+        </article>
+        <article class="quote-card tilt reveal" data-d="2">
+          <span class="qm">“</span>
+          <p>
+            They connected our CRM, forms, and payments into one flow and it
+            has been running quietly ever since. When something needed a fix,
+            it was handled the same day. Solid work, no drama.
+          </p>
+          <div class="who">
+            <span class="ava">JT</span>
+            <span><span class="n">James T.</span><br><span class="r">Real estate broker</span></span>
+          </div>
+        </article>
+      </div>
+      <p class="quotes-note">Examples for layout. Replace with real client feedback.</p>
     </div>
   </section>
 
