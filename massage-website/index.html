@@ -184,6 +184,15 @@
 
     /* ===== Service menu ===== */
     .menu-section { background: var(--ivory); padding-top: 0; }
+    .menu-card {
+      background: var(--parchment);
+      border: 1px solid var(--gold);
+      outline: 1px solid var(--hairline);
+      outline-offset: 6px;
+      padding: 44px 60px 52px;
+    }
+    .menu-card .ornament { margin: 0 auto 26px; }
+    .menu-card .ornament.bottom { margin: 34px auto 0; }
     .menu-grid {
       display: grid; grid-template-columns: 1fr 1fr;
       column-gap: 72px; row-gap: 8px;
@@ -203,7 +212,7 @@
       text-transform: uppercase; color: var(--stone); margin-top: 4px;
     }
     .menu-item p { color: var(--stone); font-size: 0.99rem; margin-top: 10px; max-width: 52ch; }
-    .signature { grid-column: 1 / -1; background: var(--parchment); border: 1px solid var(--hairline); padding: 34px 38px; margin-bottom: 18px; }
+    .signature { grid-column: 1 / -1; background: var(--ivory); border: 1px solid var(--hairline); padding: 34px 38px; margin-bottom: 18px; }
     .signature .tag {
       font-family: var(--label); font-size: 0.66rem; letter-spacing: 0.3em;
       text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 8px;
@@ -351,6 +360,7 @@
       .menu-toggle { display: block; }
       .hero-frame { padding: 64px 22px 60px; }
       section { padding: 68px 0; }
+      .menu-card { padding: 30px 22px 36px; outline-offset: 4px; }
       .menu-grid { grid-template-columns: 1fr; column-gap: 0; }
       .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 44px; }
       .portrait-frame { max-width: 320px; margin: 0 auto; }
@@ -435,7 +445,9 @@
         </p>
       </div>
 
-      <div class="menu-grid">
+      <div class="menu-card">
+        <div class="ornament">❦</div>
+        <div class="menu-grid">
         <div class="menu-item">
           <div class="menu-line">
             <h3>Wellness Massage</h3>
@@ -530,6 +542,8 @@
             &nbsp;·&nbsp; Course of ten — <strong style="color: var(--gold); font-weight: 500">$800</strong>
           </p>
         </div>
+        </div>
+        <div class="ornament bottom">❦</div>
       </div>
     </div>
   </section>
