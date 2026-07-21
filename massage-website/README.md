@@ -10,7 +10,7 @@
 | Что | Сейчас стоит (заглушка) | На что заменить |
 |---|---|---|
 | Название бизнеса | `Serene Touch Massage` | Ваше название (поиск по всему файлу) |
-| Имя | `Anna` (раздел About) | Имя вашей жены |
+| Имя | `Daryna Bozhko` — уже вписано (раздел About, подвал, SEO-разметка) | — |
 | Телефон | `(555) 123-4567` и `+15551234567` | Реальный номер (в ссылках `tel:` и `sms:` — в формате `+1XXXXXXXXXX`) |
 | Email | `hello@example.com` | Реальный email |
 | Адрес | `123 Main Street, Suite 4, Your City, ST 00000` | Реальный адрес студии (и в блоке JSON-LD в начале файла) |
@@ -27,7 +27,7 @@
 
 ### Как вставить фото
 
-Положите фото (например `anna.jpg`) рядом с `index.html` и замените блок:
+Положите фото (например `daryna.jpg`) рядом с `index.html` и замените блок:
 
 ```html
 <div class="portrait">
@@ -38,7 +38,7 @@
 на:
 
 ```html
-<div class="portrait" style="background: url('anna.jpg') center/cover;"></div>
+<div class="portrait" style="background: url('daryna.jpg') center/cover;"></div>
 ```
 
 ## Как бесплатно опубликовать (GitHub Pages)
