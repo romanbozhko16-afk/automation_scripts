@@ -207,6 +207,23 @@
     .trait { display: flex; gap: 12px; align-items: flex-start; font-size: 0.95rem; color: var(--espresso); }
     .trait::before { content: "✦"; color: var(--caramel); flex-shrink: 0; margin-top: 2px; font-size: 0.8rem; }
 
+    /* ===== Stats ===== */
+    .stats { padding: 84px 0; background: var(--white); }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .stat { text-align: center; padding: 10px 26px; border-right: 1px solid var(--linen); }
+    .stat:last-child { border-right: none; }
+    .stat .n {
+      font-family: var(--display); font-weight: 300; font-style: italic;
+      font-size: clamp(3.2rem, 6.5vw, 5rem); color: var(--espresso);
+      line-height: 1; font-variant-numeric: tabular-nums;
+    }
+    .stat .n .plus { color: var(--caramel); }
+    .stat .lbl {
+      margin-top: 14px; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.24em; text-transform: uppercase; color: var(--mist);
+    }
+    .stat .sub { margin-top: 6px; font-size: 0.86rem; color: var(--mist); font-style: italic; font-family: var(--display); }
+
     /* ===== Services ===== */
     .services { background: var(--porcelain); }
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -376,6 +393,9 @@
       .services-grid { grid-template-columns: 1fr; }
       .voices { margin: 0; border-radius: 32px; }
       .traits { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 1px solid var(--linen); padding: 26px 0; }
+      .stat:last-child { border-bottom: none; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -417,9 +437,10 @@
           <span class="line"><span><em>restores</em> you.</span></span>
         </h1>
         <p class="intro">
-          I’m Daryna Bozhko, a licensed massage therapist. In my private studio
-          there is no rush and no noise — one guest at a time, every session
-          shaped around your body and what it needs today.
+          I’m Daryna Bozhko, a licensed massage therapist with 11 years of
+          practice. In my private studio there is no rush and no noise — one
+          guest at a time, every session shaped around your body and what it
+          needs today.
         </p>
         <div class="hero-cta">
           <a class="btn btn-dark" href="sms:+15099892235">Book a session</a>
@@ -470,20 +491,46 @@
         <span class="eyebrow reveal">About me</span>
         <h2 class="reveal" data-d="1">Massage is how I help people <em>come home</em> to their bodies</h2>
         <p class="reveal" data-d="2">
-          I built this studio on a simple belief: real massage takes unhurried
-          time, full attention, and genuine skill. No assembly line, no
-          clock-watching — your appointment is yours alone.
+          My path began with a college education in Ukraine and never really
+          stopped: masterclass after masterclass, technique after technique —
+          more than 2,000 hours of professional training in total. Eleven years
+          and thousands of sessions later, massage is still my craft and my
+          calling.
         </p>
         <p class="reveal" data-d="2">
-          Whether you carry your stress in your shoulders, need gentle care
-          during pregnancy, or simply want an hour of deep quiet in a busy
-          week — I will meet you where you are.
+          I built this studio on a simple belief: real massage takes unhurried
+          time, full attention, and genuine skill. Whether you carry your
+          stress in your shoulders, need gentle care during pregnancy, or
+          simply want an hour of deep quiet — I will meet you where you are.
         </p>
         <div class="traits">
-          <div class="trait reveal" data-d="1">Licensed &amp; board-certified massage therapist</div>
-          <div class="trait reveal" data-d="2">European massage &amp; spa techniques</div>
-          <div class="trait reveal" data-d="3">Private studio, fresh linens for every guest</div>
-          <div class="trait reveal" data-d="4">Sessions tailored to you — never routine</div>
+          <div class="trait reveal" data-d="1">College-trained in Ukraine · licensed in Washington</div>
+          <div class="trait reveal" data-d="2">2,000+ hours of courses &amp; masterclasses</div>
+          <div class="trait reveal" data-d="3">11 years of hands-on practice</div>
+          <div class="trait reveal" data-d="4">Private studio — one guest at a time</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat reveal">
+          <div class="n"><span class="count" data-target="11">0</span></div>
+          <div class="lbl">Years of practice</div>
+          <div class="sub">thousands of sessions</div>
+        </div>
+        <div class="stat reveal" data-d="1">
+          <div class="n"><span class="count" data-target="2000">0</span><span class="plus">+</span></div>
+          <div class="lbl">Hours of training</div>
+          <div class="sub">college &amp; masterclasses</div>
+        </div>
+        <div class="stat reveal" data-d="2">
+          <div class="n"><span class="count" data-target="1">0</span></div>
+          <div class="lbl">Guest at a time</div>
+          <div class="sub">always, without exception</div>
         </div>
       </div>
     </div>
@@ -809,6 +856,24 @@
   restart();
   document.getElementById('slider').addEventListener('mouseenter', () => clearInterval(timer));
   document.getElementById('slider').addEventListener('mouseleave', restart);
+
+  // animated counters
+  const fmt = n => n.toLocaleString('en-US');
+  const cio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      cio.unobserve(e.target);
+      const el = e.target, target = +el.dataset.target;
+      if (reduceMotion) { el.textContent = fmt(target); return; }
+      const t0 = performance.now(), dur = 1800;
+      (function tick(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        el.textContent = fmt(Math.round(target * (1 - Math.pow(1 - p, 4))));
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.count').forEach(el => cio.observe(el));
 
   // FAQ accordion
   document.querySelectorAll('.faq-item').forEach(item => {
