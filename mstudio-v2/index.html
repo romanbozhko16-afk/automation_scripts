@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daryna’s MStudio — Massage &amp; Spa Treatments in Federal Way, WA</title>
+  <meta name="description" content="Wellness, lymphatic drainage, prenatal, honey, anti-cellulite, and face & décolleté massage by licensed therapist Daryna Bozhko. Private studio in Federal Way, WA. By appointment only.">
+  <meta property="og:title" content="Daryna’s MStudio — Massage &amp; Spa in Federal Way, WA">
+  <meta property="og:description" content="Touch that restores you. Private massage studio, one guest at a time. By appointment only.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MassageTherapy",
+    "name": "Daryna’s MStudio",
+    "description": "Private massage studio offering wellness, lymphatic drainage, prenatal, honey, anti-cellulite, and face & décolleté massage. By appointment only.",
+    "employee": { "@type": "Person", "name": "Daryna Bozhko", "jobTitle": "Licensed Massage Therapist" },
+    "telephone": "+1-509-989-2235",
+    "email": "sdaryna88@icloud.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Federal Way", "addressRegion": "WA", "addressCountry": "US" },
+    "areaServed": "Federal Way, WA",
+    "priceRange": "$45 - $135",
+    "openingHours": ["Mo-Fr 09:00-18:00", "Sa 10:00-16:00"]
+  }
+  </script>
+  <style>
+    :root {
+      --porcelain: #f7f2ec;
+      --linen: #efe6da;
+      --caramel: #b3794e;
+      --caramel-deep: #96613c;
+      --espresso: #2b211a;
+      --cocoa: #4a3a2e;
+      --mist: #8a7a6a;
+      --white: #fffdfa;
+      --display: "Fraunces", Georgia, serif;
+      --sans: "Manrope", "Segoe UI", Helvetica, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans); font-weight: 400; font-size: 1.02rem;
+      color: var(--espresso); background: var(--porcelain); line-height: 1.7;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.12; text-wrap: balance; }
+    a { color: var(--caramel-deep); }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 26px; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.26em;
+      text-transform: uppercase; color: var(--caramel-deep);
+    }
+    .eyebrow::before { content: ""; width: 34px; height: 1px; background: var(--caramel); }
+
+    .btn {
+      display: inline-block; padding: 16px 34px; border-radius: 999px;
+      font-family: var(--sans); font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
+      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), background 0.3s, color 0.3s;
+      border: 1px solid var(--espresso); cursor: pointer;
+    }
+    .btn-dark { background: var(--espresso); color: var(--porcelain); }
+    .btn-dark:hover { background: var(--caramel-deep); border-color: var(--caramel-deep); transform: translateY(-3px); box-shadow: 0 14px 30px rgba(43, 33, 26, 0.18); }
+    .btn-line { color: var(--espresso); background: transparent; }
+    .btn-line:hover { background: var(--espresso); color: var(--porcelain); transform: translateY(-3px); }
+    .btn-cream { background: var(--porcelain); color: var(--espresso); border-color: var(--porcelain); }
+    .btn-cream:hover { background: var(--caramel); border-color: var(--caramel); color: var(--white); transform: translateY(-3px); }
+    :focus-visible { outline: 2px solid var(--caramel); outline-offset: 3px; }
+
+    /* ===== Reveal-on-scroll ===== */
+    .reveal { opacity: 0; transform: translateY(34px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal[data-d="1"] { transition-delay: 0.12s; }
+    .reveal[data-d="2"] { transition-delay: 0.24s; }
+    .reveal[data-d="3"] { transition-delay: 0.36s; }
+    .reveal[data-d="4"] { transition-delay: 0.48s; }
+
+    /* ===== Header ===== */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      transition: background 0.4s, box-shadow 0.4s, transform 0.4s;
+    }
+    header.scrolled { background: rgba(247, 242, 236, 0.92); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(43, 33, 26, 0.07); }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 30px; max-width: 1240px; margin: 0 auto; }
+    .brand { font-family: var(--display); font-size: 1.3rem; color: var(--espresso); text-decoration: none; letter-spacing: 0.02em; }
+    .brand em { font-style: italic; color: var(--caramel-deep); }
+    .nav-links { display: flex; gap: 30px; align-items: center; }
+    .nav-links a:not(.btn) {
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cocoa); text-decoration: none; position: relative; padding: 4px 0;
+    }
+    .nav-links a:not(.btn)::after {
+      content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+      background: var(--caramel); transform: scaleX(0); transform-origin: right;
+      transition: transform 0.45s var(--ease);
+    }
+    .nav-links a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
+    .nav-links .btn { padding: 12px 24px; }
+    .menu-toggle { display: none; background: none; border: none; font-size: 1.7rem; color: var(--espresso); cursor: pointer; }
+
+    /* ===== Hero ===== */
+    .hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding: 130px 0 70px; overflow: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; z-index: 0; }
+    .blob-a { width: 560px; height: 560px; right: -140px; top: -100px; background: rgba(179, 121, 78, 0.20); animation: drift-a 21s ease-in-out infinite alternate; }
+    .blob-b { width: 460px; height: 460px; left: -160px; bottom: -120px; background: rgba(239, 230, 218, 0.9); animation: drift-b 26s ease-in-out infinite alternate; }
+    @keyframes drift-a { from { transform: translate(0, 0) scale(1); } to { transform: translate(-70px, 60px) scale(1.15); } }
+    @keyframes drift-b { from { transform: translate(0, 0) scale(1); } to { transform: translate(80px, -50px) scale(1.08); } }
+
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 60px; align-items: center; }
+    .hero h1 { font-size: clamp(3rem, 7.2vw, 5.6rem); font-weight: 300; color: var(--espresso); }
+    .hero h1 .line { display: block; overflow: hidden; }
+    .hero h1 .line span { display: inline-block; transform: translateY(110%); animation: rise 1.1s var(--ease) forwards; }
+    .hero h1 .line:nth-child(2) span { animation-delay: 0.15s; }
+    .hero h1 em { font-style: italic; color: var(--caramel-deep); }
+    @keyframes rise { to { transform: translateY(0); } }
+    .hero .intro {
+      margin: 30px 0 38px; max-width: 46ch; color: var(--cocoa); font-size: 1.06rem;
+      opacity: 0; animation: fade-up 1s var(--ease) 0.5s forwards;
+    }
+    .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; opacity: 0; animation: fade-up 1s var(--ease) 0.7s forwards; }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+    .hero-visual { position: relative; opacity: 0; animation: fade-up 1.2s var(--ease) 0.35s forwards; }
+    .arch {
+      position: relative; width: min(400px, 88%); margin: 0 auto;
+      border-radius: 999px 999px 24px 24px; overflow: hidden;
+      background: var(--linen);
+      box-shadow: 0 30px 70px rgba(43, 33, 26, 0.16);
+    }
+    .arch img { width: 100%; aspect-ratio: 4 / 5.4; object-fit: cover; object-position: top center; transform: scale(1.02); }
+    .arch::after {
+      content: ""; position: absolute; inset: 14px;
+      border: 1px solid rgba(255, 253, 250, 0.65);
+      border-radius: 999px 999px 14px 14px; pointer-events: none;
+    }
+    .float-card {
+      position: absolute; background: var(--white); border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(43, 33, 26, 0.14);
+      padding: 14px 20px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--cocoa); white-space: nowrap;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .float-card .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--caramel); }
+    .fc-1 { top: 12%; left: -6%; animation: bob 5.4s ease-in-out infinite; }
+    .fc-2 { bottom: 16%; right: -8%; animation: bob 6.2s ease-in-out 0.8s infinite; }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-13px); } }
+
+    .scroll-hint {
+      position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+      font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mist);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: 0; animation: fade-up 1s var(--ease) 1.2s forwards;
+    }
+    .scroll-hint::after {
+      content: ""; width: 1px; height: 42px; background: linear-gradient(var(--caramel), transparent);
+      animation: pulse-line 2s ease-in-out infinite;
+    }
+    @keyframes pulse-line { 0%, 100% { transform: scaleY(0.4); opacity: 0.4; } 50% { transform: scaleY(1); opacity: 1; } }
+
+    /* ===== Marquee ===== */
+    .marquee { background: var(--espresso); color: var(--porcelain); overflow: hidden; padding: 20px 0; }
+    .marquee-track { display: flex; gap: 0; width: max-content; animation: scroll-x 32s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    .marquee-track span {
+      font-family: var(--display); font-style: italic; font-weight: 300;
+      font-size: 1.15rem; letter-spacing: 0.08em; padding: 0 22px; white-space: nowrap;
+    }
+    .marquee-track .sep { color: var(--caramel); font-style: normal; }
+    @keyframes scroll-x { to { transform: translateX(-50%); } }
+
+    /* ===== Sections ===== */
+    section { padding: 110px 0; }
+    .section-head { max-width: 640px; margin-bottom: 64px; }
+    .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .section-head.center .eyebrow::before { display: none; }
+    .section-title { font-size: clamp(2.1rem, 4.4vw, 3.2rem); margin-top: 16px; color: var(--espresso); }
+    .section-title em { font-style: italic; color: var(--caramel-deep); }
+    .section-sub { margin-top: 18px; color: var(--mist); }
+
+    /* ===== About ===== */
+    .about { background: var(--white); border-radius: 48px 48px 0 0; }
+    .about-grid { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 70px; align-items: center; }
+    .about-photo { position: relative; }
+    .about-photo .frame {
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 26px 60px rgba(43, 33, 26, 0.14);
+    }
+    .about-photo img { aspect-ratio: 4 / 5; object-fit: cover; object-position: top center; transition: transform 1.2s var(--ease); }
+    .about-photo:hover img { transform: scale(1.045); }
+    .about-photo .tag {
+      position: absolute; bottom: -20px; right: -14px; background: var(--caramel);
+      color: var(--white); font-family: var(--display); font-style: italic;
+      padding: 14px 26px; border-radius: 999px; font-size: 1rem;
+      box-shadow: 0 14px 34px rgba(150, 97, 60, 0.35);
+      animation: bob 6s ease-in-out infinite;
+    }
+    .about h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); margin: 16px 0 22px; }
+    .about p { color: var(--cocoa); margin-bottom: 16px; max-width: 56ch; }
+    .traits { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 26px; margin-top: 28px; }
+    .trait { display: flex; gap: 12px; align-items: flex-start; font-size: 0.95rem; color: var(--espresso); }
+    .trait::before { content: "✦"; color: var(--caramel); flex-shrink: 0; margin-top: 2px; font-size: 0.8rem; }
+
+    /* ===== Services ===== */
+    .services { background: var(--porcelain); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .svc {
+      background: var(--white); border-radius: 24px; padding: 34px 30px;
+      display: flex; flex-direction: column; position: relative; overflow: hidden;
+      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+      box-shadow: 0 4px 16px rgba(43, 33, 26, 0.05);
+    }
+    .svc::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--caramel), var(--linen));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.6s var(--ease);
+    }
+    .svc:hover { transform: translateY(-8px); box-shadow: 0 24px 50px rgba(43, 33, 26, 0.12); }
+    .svc:hover::before { transform: scaleX(1); }
+    .svc .num { font-family: var(--display); font-style: italic; color: var(--caramel); font-size: 0.95rem; margin-bottom: 14px; }
+    .svc h3 { font-size: 1.45rem; margin-bottom: 10px; }
+    .svc p { color: var(--mist); font-size: 0.93rem; flex-grow: 1; }
+    .svc .prices {
+      margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--linen);
+      display: flex; gap: 24px; font-variant-numeric: tabular-nums;
+    }
+    .svc .prices div { display: flex; flex-direction: column; }
+    .svc .prices .t { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mist); font-weight: 600; }
+    .svc .prices .p { font-family: var(--display); font-size: 1.35rem; color: var(--espresso); }
+
+    .svc-feature {
+      grid-column: 1 / -1; background: var(--espresso); color: var(--porcelain);
+      border-radius: 28px; padding: 46px 50px; display: grid;
+      grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center;
+      position: relative; overflow: hidden;
+      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+    }
+    .svc-feature:hover { transform: translateY(-6px); box-shadow: 0 28px 60px rgba(43, 33, 26, 0.28); }
+    .svc-feature::after {
+      content: ""; position: absolute; right: -120px; top: -120px; width: 340px; height: 340px;
+      border-radius: 50%; background: rgba(179, 121, 78, 0.22); filter: blur(50px);
+      animation: drift-a 18s ease-in-out infinite alternate;
+    }
+    .svc-feature .badge {
+      display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--caramel); border: 1px solid rgba(179, 121, 78, 0.5);
+      border-radius: 999px; padding: 7px 16px; margin-bottom: 18px;
+    }
+    .svc-feature h3 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-bottom: 12px; }
+    .svc-feature p { color: rgba(247, 242, 236, 0.72); font-size: 0.98rem; max-width: 48ch; }
+    .course-box { position: relative; z-index: 1; display: grid; gap: 14px; }
+    .course {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+      background: rgba(247, 242, 236, 0.07); border: 1px solid rgba(247, 242, 236, 0.14);
+      border-radius: 16px; padding: 16px 24px;
+    }
+    .course .label { font-size: 0.86rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+    .course .val { font-family: var(--display); font-size: 1.5rem; color: var(--caramel); font-variant-numeric: tabular-nums; }
+
+    /* ===== Ritual / steps ===== */
+    .ritual { background: var(--white); }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; counter-reset: step; }
+    .step { position: relative; padding-top: 26px; }
+    .step::before {
+      counter-increment: step; content: "0" counter(step);
+      font-family: var(--display); font-style: italic; font-size: 3.4rem; font-weight: 300;
+      color: var(--linen); position: absolute; top: -14px; left: 0; z-index: 0;
+      -webkit-text-stroke: 1px var(--caramel);
+    }
+    .step h3 { position: relative; font-size: 1.35rem; margin-bottom: 12px; padding-top: 26px; }
+    .step p { color: var(--mist); font-size: 0.95rem; max-width: 34ch; }
+
+    /* ===== Testimonials slider ===== */
+    .voices { background: var(--espresso); color: var(--porcelain); border-radius: 48px; margin: 0 18px; }
+    .voices .section-title { color: var(--porcelain); }
+    .slider { position: relative; max-width: 780px; margin: 0 auto; text-align: center; min-height: 300px; }
+    .slide {
+      position: absolute; inset: 0; opacity: 0; transform: translateY(22px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+      pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .slide.active { opacity: 1; transform: none; pointer-events: auto; position: relative; }
+    .slide .q {
+      font-family: var(--display); font-style: italic; font-weight: 300;
+      font-size: clamp(1.25rem, 2.6vw, 1.7rem); line-height: 1.5;
+      color: rgba(247, 242, 236, 0.95);
+    }
+    .slide .who { margin-top: 26px; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--caramel); }
+    .dots { display: flex; gap: 10px; justify-content: center; margin-top: 44px; }
+    .dot-btn {
+      width: 34px; height: 4px; border-radius: 999px; border: none; cursor: pointer;
+      background: rgba(247, 242, 236, 0.25); transition: background 0.3s;
+    }
+    .dot-btn.active { background: var(--caramel); }
+    .voices-note { text-align: center; margin-top: 30px; font-size: 0.78rem; color: rgba(247, 242, 236, 0.45); }
+
+    /* ===== FAQ ===== */
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--linen); }
+    .faq-q {
+      width: 100%; background: none; border: none; cursor: pointer; text-align: left;
+      font-family: var(--display); font-size: 1.25rem; color: var(--espresso);
+      padding: 26px 54px 26px 4px; position: relative;
+    }
+    .faq-q .ic {
+      position: absolute; right: 8px; top: 50%; width: 34px; height: 34px;
+      transform: translateY(-50%); border: 1px solid var(--caramel); border-radius: 50%;
+      transition: transform 0.5s var(--ease), background 0.3s;
+    }
+    .faq-q .ic::before, .faq-q .ic::after {
+      content: ""; position: absolute; background: var(--caramel-deep); top: 50%; left: 50%;
+      transition: background 0.3s;
+    }
+    .faq-q .ic::before { width: 12px; height: 1.5px; transform: translate(-50%, -50%); }
+    .faq-q .ic::after { width: 1.5px; height: 12px; transform: translate(-50%, -50%); }
+    .faq-item.open .faq-q .ic { transform: translateY(-50%) rotate(135deg); background: var(--caramel); }
+    .faq-item.open .faq-q .ic::before, .faq-item.open .faq-q .ic::after { background: var(--white); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.6s var(--ease); }
+    .faq-a p { color: var(--mist); font-size: 0.97rem; padding: 0 4px 26px; max-width: 62ch; }
+
+    /* ===== Contact ===== */
+    .contact { background: var(--white); border-radius: 48px 48px 0 0; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .contact h2 { font-size: clamp(2.2rem, 4.4vw, 3.2rem); margin: 14px 0 20px; }
+    .contact .big-phone {
+      font-family: var(--display); font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+      color: var(--espresso); text-decoration: none; display: inline-block; margin: 6px 0 24px;
+      border-bottom: 2px solid var(--caramel); padding-bottom: 4px;
+      transition: color 0.3s;
+      font-variant-numeric: tabular-nums;
+    }
+    .contact .big-phone:hover { color: var(--caramel-deep); }
+    .contact-side { background: var(--porcelain); border-radius: 28px; padding: 42px 40px; }
+    .info-row { display: flex; justify-content: space-between; gap: 18px; padding: 13px 0; border-bottom: 1px solid var(--linen); font-size: 0.95rem; }
+    .info-row:last-child { border-bottom: none; }
+    .info-row .k { color: var(--mist); font-weight: 500; }
+    .info-row .v { text-align: right; color: var(--espresso); font-variant-numeric: tabular-nums; }
+    .info-row .v a { text-decoration: none; }
+
+    /* ===== Footer ===== */
+    footer { background: var(--espresso); color: rgba(247, 242, 236, 0.7); padding: 60px 0 34px; text-align: center; font-size: 0.9rem; }
+    footer .brand { color: var(--porcelain); font-size: 1.35rem; }
+    .foot-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px 30px; margin: 26px 0 34px; }
+    .foot-links a { color: rgba(247, 242, 236, 0.7); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; }
+    .foot-links a:hover { color: var(--caramel); }
+    .foot-note { border-top: 1px solid rgba(247, 242, 236, 0.14); padding-top: 24px; font-size: 0.8rem; color: rgba(247, 242, 236, 0.45); max-width: 620px; margin: 0 auto; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 940px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .svc-feature { grid-template-columns: 1fr; padding: 38px 30px; }
+      .steps { grid-template-columns: 1fr; gap: 34px; }
+    }
+    @media (max-width: 780px) {
+      .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--porcelain); flex-direction: column; padding: 28px;
+        box-shadow: 0 20px 40px rgba(43, 33, 26, 0.12); gap: 22px;
+      }
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
+      header { background: rgba(247, 242, 236, 0.94); }
+      .hero { padding-top: 110px; min-height: auto; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { order: -1; }
+      .fc-1 { left: 0; } .fc-2 { right: 0; }
+      .scroll-hint { display: none; }
+      section { padding: 76px 0; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 46px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .voices { margin: 0; border-radius: 32px; }
+      .traits { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      .hero h1 .line span { transform: none; }
+      .hero .intro, .hero-cta, .hero-visual, .scroll-hint { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header id="header">
+  <nav class="nav">
+    <a class="brand" href="#top">Daryna’s <em>MStudio</em></a>
+    <button class="menu-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#voices">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a class="btn btn-dark" href="sms:+15099892235">Book by text</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Massage &amp; Spa · Federal Way, WA</span>
+        <h1>
+          <span class="line"><span>Touch that</span></span>
+          <span class="line"><span><em>restores</em> you.</span></span>
+        </h1>
+        <p class="intro">
+          I’m Daryna Bozhko, a licensed massage therapist. In my private studio
+          there is no rush and no noise — one guest at a time, every session
+          shaped around your body and what it needs today.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-dark" href="sms:+15099892235">Book a session</a>
+          <a class="btn btn-line" href="#services">Services &amp; prices</a>
+        </div>
+      </div>
+      <div class="hero-visual" id="heroVisual">
+        <div class="arch">
+          <img src="daryna.jpg" alt="Daryna Bozhko, Licensed Massage Therapist">
+        </div>
+        <div class="float-card fc-1"><span class="dot"></span>Licensed LMT</div>
+        <div class="float-card fc-2"><span class="dot"></span>By appointment only</div>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll</div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Wellness</span><span class="sep">✦</span>
+      <span>Lymphatic Drainage</span><span class="sep">✦</span>
+      <span>Relaxation</span><span class="sep">✦</span>
+      <span>Prenatal</span><span class="sep">✦</span>
+      <span>Honey Massage</span><span class="sep">✦</span>
+      <span>Anti-Cellulite</span><span class="sep">✦</span>
+      <span>Face &amp; Décolleté</span><span class="sep">✦</span>
+      <span>Wellness</span><span class="sep">✦</span>
+      <span>Lymphatic Drainage</span><span class="sep">✦</span>
+      <span>Relaxation</span><span class="sep">✦</span>
+      <span>Prenatal</span><span class="sep">✦</span>
+      <span>Honey Massage</span><span class="sep">✦</span>
+      <span>Anti-Cellulite</span><span class="sep">✦</span>
+      <span>Face &amp; Décolleté</span><span class="sep">✦</span>
+    </div>
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="about-photo reveal">
+        <div class="frame">
+          <img src="daryna.jpg" alt="Daryna Bozhko in her studio">
+        </div>
+        <div class="tag">with care, Daryna</div>
+      </div>
+      <div>
+        <span class="eyebrow reveal">About me</span>
+        <h2 class="reveal" data-d="1">Massage is how I help people <em>come home</em> to their bodies</h2>
+        <p class="reveal" data-d="2">
+          I built this studio on a simple belief: real massage takes unhurried
+          time, full attention, and genuine skill. No assembly line, no
+          clock-watching — your appointment is yours alone.
+        </p>
+        <p class="reveal" data-d="2">
+          Whether you carry your stress in your shoulders, need gentle care
+          during pregnancy, or simply want an hour of deep quiet in a busy
+          week — I will meet you where you are.
+        </p>
+        <div class="traits">
+          <div class="trait reveal" data-d="1">Licensed &amp; board-certified massage therapist</div>
+          <div class="trait reveal" data-d="2">European massage &amp; spa techniques</div>
+          <div class="trait reveal" data-d="3">Private studio, fresh linens for every guest</div>
+          <div class="trait reveal" data-d="4">Sessions tailored to you — never routine</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">Services &amp; prices</span>
+        <h2 class="section-title reveal" data-d="1">Choose your <em>ritual</em></h2>
+        <p class="section-sub reveal" data-d="2">
+          Every session begins with a short consultation — undecided? Text me
+          and I’ll gladly recommend what fits your body best.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <article class="svc reveal">
+          <div class="num">№ 01</div>
+          <h3>Wellness Massage</h3>
+          <p>A classic full-body massage that relieves muscle tension and restores overall balance.</p>
+          <div class="prices">
+            <div><span class="t">60 min</span><span class="p">$85</span></div>
+            <div><span class="t">90 min</span><span class="p">$120</span></div>
+          </div>
+        </article>
+
+        <article class="svc reveal" data-d="1">
+          <div class="num">№ 02</div>
+          <h3>Relaxation Massage</h3>
+          <p>Soft, flowing movements for deep relaxation and stress relief.</p>
+          <div class="prices">
+            <div><span class="t">60 min</span><span class="p">$85</span></div>
+            <div><span class="t">90 min</span><span class="p">$120</span></div>
+          </div>
+        </article>
+
+        <article class="svc reveal" data-d="2">
+          <div class="num">№ 03</div>
+          <h3>Lymphatic Drainage</h3>
+          <p>A gentle technique that removes excess fluid, reduces swelling, and improves circulation.</p>
+          <div class="prices">
+            <div><span class="t">60 min</span><span class="p">$95</span></div>
+            <div><span class="t">90 min</span><span class="p">$135</span></div>
+          </div>
+        </article>
+
+        <article class="svc reveal">
+          <div class="num">№ 04</div>
+          <h3>Prenatal Massage</h3>
+          <p>A gentle side-lying technique with bolster support, easing tension in the back, legs, and hips.</p>
+          <div class="prices">
+            <div><span class="t">60 min</span><span class="p">$95</span></div>
+            <div><span class="t">90 min</span><span class="p">$135</span></div>
+          </div>
+        </article>
+
+        <article class="svc reveal" data-d="1">
+          <div class="num">№ 05</div>
+          <h3>Honey Massage</h3>
+          <p>A detoxifying technique with natural honey that draws out toxins and visibly improves skin.</p>
+          <div class="prices">
+            <div><span class="t">60 min</span><span class="p">$95</span></div>
+            <div><span class="t">90 min</span><span class="p">$135</span></div>
+          </div>
+        </article>
+
+        <article class="svc reveal" data-d="2">
+          <div class="num">№ 06</div>
+          <h3>Face &amp; Décolleté</h3>
+          <p>A relaxing treatment that reduces puffiness and restores healthy tone to the face and neck.</p>
+          <div class="prices">
+            <div><span class="t">30 min</span><span class="p">$45</span></div>
+            <div><span class="t">45 min</span><span class="p">$60</span></div>
+          </div>
+        </article>
+
+        <article class="svc-feature reveal">
+          <div>
+            <span class="badge">Best results in a course</span>
+            <h3>Anti-Cellulite Massage</h3>
+            <p>
+              An intensive technique to improve skin tone. Single sessions —
+              45 min for $75 or 60 min for $95 — and course packages for
+              lasting, visible results.
+            </p>
+          </div>
+          <div class="course-box">
+            <div class="course"><span class="label">Course of 5</span><span class="val">$430</span></div>
+            <div class="course"><span class="label">Course of 10</span><span class="val">$800</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RITUAL / STEPS ============ -->
+  <section class="ritual">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">The experience</span>
+        <h2 class="section-title reveal" data-d="1">How your visit <em>unfolds</em></h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <h3>We talk first</h3>
+          <p>A short consultation about your goals, pressure preferences, and anything your body is telling you.</p>
+        </div>
+        <div class="step reveal" data-d="1">
+          <h3>Your session</h3>
+          <p>Full, unhurried time on the table. Pressure and focus adjust continuously — informed by you, never by routine.</p>
+        </div>
+        <div class="step reveal" data-d="2">
+          <h3>Leave lighter</h3>
+          <p>Warm towel, a glass of water, and simple aftercare advice so the effect stays with you for days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="voices" id="voices">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow reveal">Kind words</span>
+        <h2 class="section-title reveal" data-d="1">What guests <em>say</em></h2>
+      </div>
+      <div class="slider" id="slider">
+        <div class="slide active">
+          <p class="q">
+            “I sit at a desk all day and by evening my legs used to feel like
+            concrete. After the second lymphatic drainage session the heaviness
+            was just gone. She never rushes — and I sleep like a rock that
+            night, every time.”
+          </p>
+          <div class="who">Sarah</div>
+        </div>
+        <div class="slide">
+          <p class="q">
+            “My wife booked me the 90-minute wellness massage for my birthday.
+            I’m not really a spa person, but Daryna spent real time on my lower
+            back instead of just doing a routine. Walked out feeling two inches
+            taller.”
+          </p>
+          <div class="who">Vlad</div>
+        </div>
+        <div class="slide">
+          <p class="q">
+            “I was 31 weeks pregnant and couldn’t sleep from the hip pain. She
+            set me up on my side with pillows everywhere and kept asking if I
+            was comfortable — the best my back has felt in months.”
+          </p>
+          <div class="who">Anna</div>
+        </div>
+        <div class="slide">
+          <p class="q">
+            “My shoulders and lower back were wrecked from years of physical
+            work. Now it’s a regular thing — she works out knots other places
+            just rubbed over. Always starts on time, no fuss.”
+          </p>
+          <div class="who">Eduard</div>
+        </div>
+        <div class="dots" id="dots"></div>
+      </div>
+      <p class="voices-note">Replace these examples with real reviews from your clients.</p>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow reveal">Good to know</span>
+        <h2 class="section-title reveal" data-d="1">Questions, <em>answered</em></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">What should I expect at my first appointment?<span class="ic"></span></button>
+          <div class="faq-a"><p>
+            Please arrive about ten minutes early for a brief health intake and
+            consultation. You undress to your comfort level and settle under the
+            linens — you are professionally draped at all times, and only the
+            area being worked on is ever uncovered.
+          </p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">How do I book a session?<span class="ic"></span></button>
+          <div class="faq-a"><p>
+            Call or text (509) 989-2235 and I’ll answer personally, usually
+            within a few hours. Evening and weekend times are available on
+            request, and standing weekly or monthly reservations can be arranged.
+          </p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">What forms of payment do you accept?<span class="ic"></span></button>
+          <div class="faq-a"><p>
+            Cash, all major credit and debit cards, Venmo, and Zelle. Payment is
+            due at the time of service. Gratuity is never expected and always
+            appreciated.
+          </p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">What is your cancellation policy?<span class="ic"></span></button>
+          <div class="faq-a"><p>
+            Each appointment reserves the studio exclusively for you, so I ask
+            for at least 24 hours’ notice to cancel or reschedule. Later
+            cancellations may be charged 50% of the service; missed appointments
+            may be charged in full.
+          </p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">Are there reasons I shouldn’t get a massage?<span class="ic"></span></button>
+          <div class="faq-a"><p>
+            Massage isn’t advised during fever or contagious illness, and some
+            conditions call for a physician’s clearance — including
+            first-trimester pregnancy. When in doubt, just ask before you book.
+          </p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">How often should I come?<span class="ic"></span></button>
+          <div class="faq-a"><p>
+            For general wellbeing, monthly works well for most guests. For
+            chronic tension or a course of anti-cellulite massage, every one to
+            two weeks brings the most lasting results.
+          </p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="container contact-grid">
+      <div>
+        <span class="eyebrow reveal">Reservations</span>
+        <h2 class="reveal" data-d="1">Your hour of <em>quiet</em> is one text away</h2>
+        <a class="big-phone reveal" data-d="2" href="tel:+15099892235">(509) 989-2235</a>
+        <div class="hero-cta reveal" data-d="3">
+          <a class="btn btn-dark" href="sms:+15099892235">Text to book</a>
+          <a class="btn btn-line" href="mailto:sdaryna88@icloud.com">Email me</a>
+        </div>
+      </div>
+      <div class="contact-side reveal" data-d="2">
+        <div class="info-row"><span class="k">Location</span><span class="v">Private studio, Federal Way, WA<br>address shared at booking</span></div>
+        <div class="info-row"><span class="k">Mon – Fri</span><span class="v">9:00 AM – 6:00 PM</span></div>
+        <div class="info-row"><span class="k">Saturday</span><span class="v">10:00 AM – 4:00 PM</span></div>
+        <div class="info-row"><span class="k">Sunday</span><span class="v">Closed</span></div>
+        <div class="info-row"><span class="k">Email</span><span class="v"><a href="mailto:sdaryna88@icloud.com">sdaryna88@icloud.com</a></span></div>
+        <div class="info-row"><span class="k">Payment</span><span class="v">Cash · Card · Venmo · Zelle</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <a class="brand" href="#top">Daryna’s <em>MStudio</em></a>
+    <div class="foot-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a href="tel:+15099892235">(509) 989-2235</a>
+    </div>
+    <p class="foot-note">
+      © 2026 Daryna’s MStudio · Daryna Bozhko, Licensed Massage Therapist ·
+      License № 00000 · Federal Way, WA · By appointment only ·
+      Massage services are non-medical.
+    </p>
+  </div>
+</footer>
+
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // sticky header state
+  const header = document.getElementById('header');
+  addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 30), { passive: true });
+
+  // mobile menu
+  const toggle = document.querySelector('.menu-toggle');
+  const links = document.querySelector('.nav-links');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.16 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // gentle parallax on the hero photo
+  const visual = document.getElementById('heroVisual');
+  if (visual && !reduceMotion) {
+    addEventListener('scroll', () => {
+      if (scrollY < innerHeight) visual.style.transform = `translateY(${scrollY * 0.07}px)`;
+    }, { passive: true });
+  }
+
+  // testimonial slider
+  const slides = [...document.querySelectorAll('.slide')];
+  const dotsBox = document.getElementById('dots');
+  let cur = 0, timer;
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'dot-btn' + (i === 0 ? ' active' : '');
+    b.setAttribute('aria-label', 'Review ' + (i + 1));
+    b.addEventListener('click', () => { show(i); restart(); });
+    dotsBox.appendChild(b);
+  });
+  const dots = [...dotsBox.children];
+  function show(i) {
+    slides[cur].classList.remove('active'); dots[cur].classList.remove('active');
+    cur = i;
+    slides[cur].classList.add('active'); dots[cur].classList.add('active');
+  }
+  function restart() { clearInterval(timer); if (!reduceMotion) timer = setInterval(() => show((cur + 1) % slides.length), 6000); }
+  restart();
+  document.getElementById('slider').addEventListener('mouseenter', () => clearInterval(timer));
+  document.getElementById('slider').addEventListener('mouseleave', restart);
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const open = item.classList.toggle('open');
+      q.setAttribute('aria-expanded', open);
+      a.style.maxHeight = open ? a.scrollHeight + 'px' : 0;
+    });
+  });
+</script>
+
+</body>
+</html>
