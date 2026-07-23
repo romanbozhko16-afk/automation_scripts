@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Личное приглашение</title>
+<style>
+  :root{
+    --night-deep:#15112a;
+    --night-mid:#2a2049;
+    --parchment:#f1e2be;
+    --parchment-dim:#e6d0a0;
+    --ink:#251c3a;
+    --ink-soft:#5b4f70;
+    --gold:#a9782f;
+    --wine:#9c3350;
+    --wine-bright:#c1476a;
+    --shadow:0 30px 70px -25px rgba(10,6,25,.65);
+    --radius:22px;
+    --font-display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Consolas,"Courier New",monospace;
+    --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",Helvetica,Arial,sans-serif;
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  button,input,textarea{ font-family:inherit; color:inherit; }
+  body{
+    min-height:100vh;
+    background:radial-gradient(ellipse at 28% -8%, var(--night-mid), var(--night-deep) 62%);
+    color:var(--parchment);
+    font-family:var(--font-sans);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    overflow-x:hidden;
+  }
+  canvas#bg{ position:fixed; inset:0; width:100%; height:100%; z-index:0; }
+  .stage-wrap{ position:relative; z-index:1; width:100%; display:flex; justify-content:center; }
+  .ticket{
+    width:100%;
+    max-width:420px;
+    background:var(--parchment);
+    color:var(--ink);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .ticket-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:16px 22px;
+    font-family:var(--font-mono);
+    font-size:.66rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    border-bottom:2px dashed rgba(169,120,47,.4);
+  }
+  .ticket-header .brand{ font-weight:600; color:var(--ink-soft); }
+  .ticket-header .ticket-no{ color:var(--gold); white-space:nowrap; }
+  .ticket-body{
+    padding:32px 26px 26px;
+    max-height:60vh;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+  }
+  .ticket-body::-webkit-scrollbar{ width:6px; }
+  .ticket-body::-webkit-scrollbar-thumb{ background:rgba(37,28,58,.25); border-radius:3px; }
+  .divider{ height:0; margin:0; position:relative; border-top:2px dashed rgba(169,120,47,.5); }
+  .divider::before,.divider::after{
+    content:"";
+    position:absolute;
+    top:-11px;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:var(--night-deep);
+  }
+  .divider::before{ left:-11px; }
+  .divider::after{ right:-11px; }
+  .ticket-stub{
+    background:var(--parchment-dim);
+    padding:16px 22px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .dots{ display:flex; gap:10px; }
+  .dot{ width:8px; height:8px; border-radius:50%; background:rgba(37,28,58,.22); }
+  .dot.active{ background:var(--wine); }
+  .dot.done{ background:var(--gold); }
+
+  .stage-inner{ animation:fadeSlide .4s ease; }
+  @keyframes fadeSlide{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes shake{
+    10%,90%{ transform:translateX(-1px); }
+    20%,80%{ transform:translateX(2px); }
+    30%,50%,70%{ transform:translateX(-5px); }
+    40%,60%{ transform:translateX(5px); }
+  }
+  .shake{ animation:shake .4s ease; }
+  @media (prefers-reduced-motion:reduce){
+    .stage-inner{ animation:none; }
+    .shake{ animation:none; }
+    .btn,.card{ transition:none; }
+  }
+
+  .step-row{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .step-row .eyebrow{ margin:0; }
+  .back-btn{
+    background:none; border:none; cursor:pointer;
+    font-size:1.05rem; line-height:1; color:var(--ink-soft);
+    padding:4px 6px; border-radius:8px;
+  }
+  .back-btn:hover{ color:var(--wine); }
+  .back-btn:focus-visible{ outline:2px solid var(--gold); outline-offset:1px; }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.7rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--wine);
+    margin:0 0 10px;
+  }
+  .display{
+    font-family:var(--font-display);
+    font-size:clamp(1.7rem,6vw,2.35rem);
+    line-height:1.16;
+    margin:0 0 14px;
+    text-wrap:balance;
+    letter-spacing:-.01em;
+  }
+  .display-sm{ font-size:clamp(1.35rem,5vw,1.6rem); }
+  .lede{ font-size:1rem; line-height:1.55; color:var(--ink-soft); margin:0 0 22px; max-width:34ch; }
+  .hint{ font-size:.78rem; color:var(--ink-soft); margin:-10px 0 16px; transition:color .2s ease; }
+
+  .choice-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--font-sans);
+    font-size:.95rem;
+    font-weight:600;
+    padding:14px 22px;
+    border-radius:14px;
+    border:2px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .btn.primary{ background:var(--wine); color:var(--parchment); box-shadow:0 10px 24px -10px rgba(156,51,80,.6); }
+  .btn.primary:hover{ transform:translateY(-2px); box-shadow:0 14px 28px -10px rgba(156,51,80,.7); background:var(--wine-bright); }
+  .btn.ghost{ background:transparent; border-color:rgba(37,28,58,.25); color:var(--ink); }
+  .btn.ghost:hover{ border-color:var(--ink); }
+  .btn.small{ padding:9px 16px; font-size:.85rem; }
+  .btn:focus-visible{ outline:3px solid var(--gold); outline-offset:2px; }
+  .btn:active{ transform:translateY(0); }
+
+  .face{ font-family:var(--font-mono); font-size:2.6rem; margin:6px 0 18px; color:var(--wine); }
+
+  .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:4px 0 6px; }
+  .card{
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    padding:14px 8px; border-radius:14px; border:2px solid rgba(37,28,58,.15);
+    background:rgba(255,255,255,.28); cursor:pointer;
+    font-family:var(--font-sans); font-size:.78rem; text-align:center; line-height:1.25;
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .card .icon{ font-size:1.5rem; }
+  .card:hover{ transform:translateY(-2px); }
+  .card.selected{ border-color:var(--wine); background:rgba(156,51,80,.14); }
+  .card:focus-visible{ outline:3px solid var(--gold); outline-offset:2px; }
+  .other-input{ margin-top:10px; }
+
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .chip{
+    font-family:var(--font-sans); font-size:.78rem; padding:8px 14px; border-radius:999px;
+    border:1.5px solid rgba(37,28,58,.2); background:transparent; color:var(--ink-soft); cursor:pointer;
+  }
+  .chip:hover{ border-color:var(--wine); color:var(--wine); }
+  .chip:focus-visible{ outline:3px solid var(--gold); outline-offset:2px; }
+
+  .field{
+    width:100%; font-family:var(--font-sans); font-size:.95rem; padding:12px 14px;
+    border-radius:12px; border:1.5px solid rgba(37,28,58,.25); background:rgba(255,255,255,.45);
+    margin-bottom:18px;
+  }
+  .field:focus{ outline:none; border-color:var(--wine); background:#fff; }
+  textarea.field{ min-height:90px; resize:vertical; }
+
+  .datetime-row{ display:flex; gap:12px; margin-bottom:16px; }
+  .datetime-field{ flex:1; display:flex; flex-direction:column; gap:6px; min-width:0; }
+  .datetime-field .field{ margin-bottom:0; }
+  .field-label{ font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); }
+
+  .stamp{
+    display:inline-block; align-self:flex-start;
+    font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--wine); border:2px solid var(--wine); border-radius:999px; padding:6px 14px;
+    transform:rotate(-4deg); margin-bottom:16px;
+  }
+  .summary{ display:flex; flex-direction:column; gap:12px; margin-bottom:18px; }
+  .summary-row{ display:flex; flex-direction:column; gap:2px; }
+  .summary-row .label{ font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); }
+  .summary-row .value{ font-size:.95rem; }
+  .ps{ font-style:italic; font-size:.85rem; color:var(--ink-soft); margin:4px 0 20px; padding-top:14px; border-top:1px solid rgba(37,28,58,.15); }
+
+  .actions{ display:flex; flex-direction:column; gap:10px; align-items:stretch; }
+  .copy-feedback{ font-size:.78rem; color:var(--wine); text-align:center; min-height:1.1em; margin:0; }
+
+  @media (max-width:360px){
+    .ticket-body{ padding:26px 18px 22px; }
+    .ticket-header{ padding:14px 16px; }
+    .ticket-stub{ padding:14px 16px 18px; }
+  }
+</style>
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <main class="stage-wrap">
+    <div class="ticket">
+      <div class="ticket-header">
+        <span class="brand">Личное приглашение</span>
+        <span class="ticket-no" id="ticketNo"></span>
+      </div>
+      <div class="ticket-body" id="stage"></div>
+      <div class="divider" id="divider"></div>
+      <div class="ticket-stub" id="ticketStub"><div class="dots" id="progressDots"></div></div>
+    </div>
+  </main>
+<script>
+(function(){
+  function run(){
+    var ACTIVITIES = [
+      { id:'cinema',   icon:'🎬', label:'Кино' },
+      { id:'bowling',  icon:'🎳', label:'Боулинг' },
+      { id:'dinner',   icon:'🍽️', label:'Ужин в ресторане' },
+      { id:'walk',     icon:'🚶‍♀️', label:'Прогулка' },
+      { id:'hike',     icon:'🥾', label:'Поход / хайк' },
+      { id:'picnic',   icon:'🧺', label:'Пикник' },
+      { id:'karaoke',  icon:'🎤', label:'Караоке' },
+      { id:'dance',    icon:'💃', label:'Танцы' },
+      { id:'coffee',   icon:'☕', label:'Кофе и разговоры' },
+      { id:'workshop', icon:'🎨', label:'Мастер-класс' },
+      { id:'spa',      icon:'💆‍♀️', label:'Спа-день' },
+      { id:'homenight',icon:'🍿', label:'Вечер дома вдвоём' },
+      { id:'surprise', icon:'🎁', label:'Удиви меня' }
+    ];
+    var LOCATION_CHIPS = ['Рядом с домом','В центре города','Куда-то новое','Не важно, я с тобой'];
+    var WHEN_CHIPS = ['Сегодня вечером','На этой неделе','На выходных','Ты выбираешь'];
+    var PREV_STEP = { celebrate:'question', activity:'celebrate', location:'activity', when:'location', wishes:'when', confirm:'wishes' };
+
+    var state = { step:'cover', activities:new Set(), customActivity:'', location:'', dateValue:'', timeValue:'', whenNote:'', wishes:'' };
+
+    var stageEl = document.getElementById('stage');
+    var dotsEl = document.getElementById('progressDots');
+    var dividerEl = document.getElementById('divider');
+    var stubEl = document.getElementById('ticketStub');
+    var ticketNoEl = document.getElementById('ticketNo');
+
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, function(ch){
+        return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch];
+      });
+    }
+
+    function ticketNumber(){
+      var d = new Date();
+      var yy = String(d.getFullYear()).slice(-2);
+      var mm = String(d.getMonth()+1).padStart(2,'0');
+      var dd = String(d.getDate()).padStart(2,'0');
+      var rand = Math.floor(1000 + Math.random()*9000);
+      return '№ ' + yy + mm + dd + '-' + rand;
+    }
+
+    function todayISO(){
+      var d = new Date();
+      var mm = String(d.getMonth()+1).padStart(2,'0');
+      var dd = String(d.getDate()).padStart(2,'0');
+      return d.getFullYear() + '-' + mm + '-' + dd;
+    }
+
+    function dotsTpl(activeIndex){
+      var out = '';
+      for (var i=0;i<4;i++){
+        var cls = 'dot';
+        if (i < activeIndex) cls += ' done';
+        else if (i === activeIndex) cls += ' active';
+        out += '<span class="' + cls + '"></span>';
+      }
+      return out;
+    }
+
+    function backRow(label){
+      return '<div class="step-row"><button type="button" class="back-btn" data-action="back" aria-label="Назад">←</button><p class="eyebrow">' + label + '</p></div>';
+    }
+
+    function coverTpl(){
+      return ''
+        + '<p class="eyebrow">Личное приглашение</p>'
+        + '<h1 class="display">Тебе письмо</h1>'
+        + '<p class="lede">У меня есть один вопрос. Открой, когда будет минутка.</p>'
+        + '<button type="button" class="btn primary" data-action="open">Открыть</button>';
+    }
+
+    function questionTpl(){
+      return ''
+        + '<p class="eyebrow">Вопрос</p>'
+        + '<h1 class="display">Хочешь сходить со мной на свидание?</h1>'
+        + '<div class="choice-row">'
+        + '<button type="button" class="btn primary" data-action="yes">Да</button>'
+        + '<button type="button" class="btn ghost" data-action="no">Нет</button>'
+        + '</div>';
+    }
+
+    function sadTpl(){
+      return ''
+        + '<p class="face">:-(</p>'
+        + '<p class="lede">Жаль. Но вопрос остаётся открытым — я подожду.</p>'
+        + '<button type="button" class="btn ghost small" data-action="retry">Может, всё-таки да?</button>';
+    }
+
+    function celebrateTpl(){
+      return ''
+        + '<p class="eyebrow">Ура!</p>'
+        + '<h1 class="display display-sm">Тебе повезло 🎉</h1>'
+        + '<p class="lede">Ты идёшь на свидание с лучшим в мире красавчиком! Удачи.</p>'
+        + '<div class="actions">'
+        + '<button type="button" class="btn primary" data-action="continue-from-celebrate">Дальше</button>'
+        + '<button type="button" class="btn ghost small" data-action="send-celebration">Прислать это письмо мне на почту 💌</button>'
+        + '<p class="hint" style="margin:6px 0 0">Откроется твоя почта — останется нажать «Отправить»</p>'
+        + '</div>';
+    }
+
+    function activityTpl(){
+      var cards = ACTIVITIES.map(function(a){
+        var sel = state.activities.has(a.id);
+        return '<button type="button" class="card' + (sel ? ' selected' : '') + '" data-action="toggle-activity" data-id="' + a.id + '" aria-pressed="' + sel + '">'
+          + '<span class="icon">' + a.icon + '</span><span>' + a.label + '</span></button>';
+      }).join('');
+      var otherSel = state.activities.has('other');
+      var otherCard = '<button type="button" class="card' + (otherSel ? ' selected' : '') + '" data-action="toggle-activity" data-id="other" aria-pressed="' + otherSel + '">'
+        + '<span class="icon">✏️</span><span>Своё</span></button>';
+      var otherInput = otherSel
+        ? '<input class="field other-input" type="text" placeholder="Напиши свою идею" data-bind="customActivity" value="' + escapeHtml(state.customActivity) + '">'
+        : '';
+      return backRow('Шаг 1 из 4')
+        + '<h2 class="display display-sm">Чем займёмся?</h2>'
+        + '<p class="hint">Можно выбрать сколько угодно вариантов</p>'
+        + '<div class="grid">' + cards + otherCard + '</div>'
+        + otherInput
+        + '<button type="button" class="btn primary" data-action="next-from-activity" style="margin-top:18px">Далее</button>';
+    }
+
+    function locationTpl(){
+      var chips = LOCATION_CHIPS.map(function(c){
+        return '<button type="button" class="chip" data-action="fill-location" data-value="' + escapeHtml(c) + '">' + c + '</button>';
+      }).join('');
+      return backRow('Шаг 2 из 4')
+        + '<h2 class="display display-sm">Куда бы ты хотела пойти?</h2>'
+        + '<div class="chip-row">' + chips + '</div>'
+        + '<input class="field" type="text" id="locationInput" placeholder="Своё место или пожелание" data-bind="location" value="' + escapeHtml(state.location) + '">'
+        + '<button type="button" class="btn primary" data-action="next-from-location">Далее</button>';
+    }
+
+    function whenTpl(){
+      var chips = WHEN_CHIPS.map(function(c){
+        return '<button type="button" class="chip" data-action="fill-when" data-value="' + escapeHtml(c) + '">' + c + '</button>';
+      }).join('');
+      return backRow('Шаг 3 из 4')
+        + '<h2 class="display display-sm">Когда?</h2>'
+        + '<p class="hint">Точную дату — или в двух словах, если пока не знаешь</p>'
+        + '<div class="datetime-row">'
+        + '<div class="datetime-field"><label class="field-label" for="dateInput">Дата</label><input class="field" type="date" id="dateInput" data-bind="dateValue" min="' + todayISO() + '" value="' + escapeHtml(state.dateValue) + '"></div>'
+        + '<div class="datetime-field"><label class="field-label" for="timeInput">Время</label><input class="field" type="time" id="timeInput" data-bind="timeValue" value="' + escapeHtml(state.timeValue) + '"></div>'
+        + '</div>'
+        + '<div class="chip-row">' + chips + '</div>'
+        + '<input class="field" type="text" id="whenNoteInput" placeholder="Или своими словами" data-bind="whenNote" value="' + escapeHtml(state.whenNote) + '">'
+        + '<button type="button" class="btn primary" data-action="next-from-when">Далее</button>';
+    }
+
+    function wishesTpl(){
+      return backRow('Шаг 4 из 4')
+        + '<h2 class="display display-sm">Особые пожелания</h2>'
+        + '<p class="hint">Необязательно — но вдруг есть что-то важное</p>'
+        + '<textarea class="field" id="wishesInput" placeholder="Время, настроение, любая мелочь..." data-bind="wishes">' + escapeHtml(state.wishes) + '</textarea>'
+        + '<button type="button" class="btn primary" data-action="next-from-wishes">Готово</button>';
+    }
+
+    function formatWhen(){
+      var parts = [];
+      if (state.dateValue){
+        var d = new Date(state.dateValue + 'T00:00:00');
+        parts.push(d.toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' }));
+      }
+      if (state.timeValue) parts.push('в ' + state.timeValue);
+      if (parts.length) return parts.join(' ');
+      if (state.whenNote.trim()) return state.whenNote.trim();
+      return 'Договоримся';
+    }
+
+    function summaryData(){
+      var labels = ACTIVITIES.filter(function(a){ return state.activities.has(a.id); }).map(function(a){ return a.label; });
+      if (state.activities.has('other') && state.customActivity.trim()) labels.push(state.customActivity.trim());
+      return {
+        activity: labels.length ? labels.join(', ') : 'На твоё усмотрение',
+        location: state.location.trim() || 'Как получится',
+        when: formatWhen(),
+        wishes: state.wishes.trim() || '—'
+      };
+    }
+
+    function confirmTpl(){
+      var s = summaryData();
+      return backRow('Билет оформлен')
+        + '<span class="stamp">Подтверждено ✓</span>'
+        + '<h2 class="display display-sm">Свидание. Скоро.</h2>'
+        + '<div class="summary">'
+        + '<div class="summary-row"><span class="label">Активность</span><span class="value">' + escapeHtml(s.activity) + '</span></div>'
+        + '<div class="summary-row"><span class="label">Локация</span><span class="value">' + escapeHtml(s.location) + '</span></div>'
+        + '<div class="summary-row"><span class="label">Когда</span><span class="value">' + escapeHtml(s.when) + '</span></div>'
+        + '<div class="summary-row"><span class="label">Пожелания</span><span class="value">' + escapeHtml(s.wishes) + '</span></div>'
+        + '</div>'
+        + '<p class="ps">P.S. Что бы ты ни выбрала — я уже жду этот вечер.</p>'
+        + '<div class="actions">'
+        + '<button type="button" class="btn primary" data-action="send">Отправить ответ</button>'
+        + '<p class="hint" style="margin:-6px 0 0">Откроется твоя почта, письмо уже адресовано мне</p>'
+        + '<button type="button" class="btn ghost small" data-action="copy">Скопировать текст</button>'
+        + '<p class="copy-feedback" id="copyFeedback"></p>'
+        + '</div>';
+    }
+
+    function render(){
+      var html = '', dots = '';
+      if (state.step === 'cover') html = coverTpl();
+      else if (state.step === 'question') html = questionTpl();
+      else if (state.step === 'sad') html = sadTpl();
+      else if (state.step === 'celebrate') html = celebrateTpl();
+      else if (state.step === 'activity'){ html = activityTpl(); dots = dotsTpl(0); }
+      else if (state.step === 'location'){ html = locationTpl(); dots = dotsTpl(1); }
+      else if (state.step === 'when'){ html = whenTpl(); dots = dotsTpl(2); }
+      else if (state.step === 'wishes'){ html = wishesTpl(); dots = dotsTpl(3); }
+      else if (state.step === 'confirm') html = confirmTpl();
+
+      stageEl.innerHTML = '<div class="stage-inner">' + html + '</div>';
+      dotsEl.innerHTML = dots;
+      var showStub = !!dots;
+      dividerEl.style.display = showStub ? 'block' : 'none';
+      stubEl.style.display = showStub ? 'flex' : 'none';
+
+      var heading = stageEl.querySelector('h1, h2');
+      if (heading){
+        heading.setAttribute('tabindex', '-1');
+        heading.focus({ preventScroll:true });
+      }
+    }
+
+    function toggleOtherInput(show){
+      var grid = stageEl.querySelector('.grid');
+      var input = stageEl.querySelector('.other-input');
+      if (show && !input && grid){
+        input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'field other-input';
+        input.placeholder = 'Напиши свою идею';
+        input.setAttribute('data-bind', 'customActivity');
+        input.value = state.customActivity;
+        grid.insertAdjacentElement('afterend', input);
+      } else if (!show && input){
+        input.remove();
+      }
+    }
+
+    function nudge(){
+      var grid = stageEl.querySelector('.grid');
+      if (grid){
+        grid.classList.remove('shake');
+        void grid.offsetWidth;
+        grid.classList.add('shake');
+      }
+      var hint = stageEl.querySelector('.hint');
+      if (hint){
+        var original = hint.textContent;
+        hint.textContent = 'Выбери хотя бы один вариант — или «Своё»';
+        hint.style.color = 'var(--wine)';
+        setTimeout(function(){
+          hint.textContent = original;
+          hint.style.color = '';
+        }, 2200);
+      }
+    }
+
+    function buildSummaryText(){
+      var s = summaryData();
+      return 'Она сказала да!\n\nАктивность: ' + s.activity + '\nЛокация: ' + s.location + '\nКогда: ' + s.when + '\nПожелания: ' + s.wishes;
+    }
+
+    function sendMail(){
+      var subject = encodeURIComponent('Ответ на твоё приглашение');
+      var body = encodeURIComponent(buildSummaryText());
+      window.location.href = 'mailto:romanbozhko16@gmail.com?subject=' + subject + '&body=' + body;
+    }
+
+    function sendCelebrationMail(){
+      var subject = encodeURIComponent('Удачи!');
+      var body = encodeURIComponent('Тебе повезло, ты идёшь на свидание с лучшим в мире красавчиком! Удачи.\n\n— Р.');
+      window.location.href = 'mailto:sdaryna88@icloud.com?subject=' + subject + '&body=' + body;
+    }
+
+    function copyAnswer(){
+      var text = buildSummaryText();
+      var feedback = document.getElementById('copyFeedback');
+      function done(){ if (feedback) feedback.textContent = 'Скопировано ✓'; }
+      function fail(){ if (feedback) feedback.textContent = 'Не получилось скопировать'; }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(fail);
+      } else {
+        try{
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done();
+        } catch(err){ fail(); }
+      }
+    }
+
+    document.addEventListener('click', function(e){
+      var btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      var action = btn.dataset.action;
+
+      if (action === 'open'){ state.step = 'question'; render(); }
+      else if (action === 'yes'){ state.step = 'celebrate'; render(); }
+      else if (action === 'no'){ state.step = 'sad'; render(); }
+      else if (action === 'continue-from-celebrate'){ state.step = 'activity'; render(); }
+      else if (action === 'send-celebration'){ sendCelebrationMail(); }
+      else if (action === 'retry'){ state.step = 'question'; render(); }
+      else if (action === 'back'){ state.step = PREV_STEP[state.step] || 'cover'; render(); }
+      else if (action === 'toggle-activity'){
+        var id = btn.dataset.id;
+        if (state.activities.has(id)){
+          state.activities.delete(id);
+          btn.classList.remove('selected');
+          btn.setAttribute('aria-pressed', 'false');
+        } else {
+          state.activities.add(id);
+          btn.classList.add('selected');
+          btn.setAttribute('aria-pressed', 'true');
+        }
+        if (id === 'other') toggleOtherInput(state.activities.has('other'));
+      }
+      else if (action === 'next-from-activity'){
+        if (state.activities.size === 0){ nudge(); return; }
+        state.step = 'location'; render();
+      }
+      else if (action === 'fill-location'){
+        state.location = btn.dataset.value;
+        var input = document.getElementById('locationInput');
+        if (input) input.value = state.location;
+      }
+      else if (action === 'next-from-location'){ state.step = 'when'; render(); }
+      else if (action === 'fill-when'){
+        state.whenNote = btn.dataset.value;
+        state.dateValue = '';
+        state.timeValue = '';
+        var whenInput = document.getElementById('whenNoteInput');
+        if (whenInput) whenInput.value = state.whenNote;
+        var dateInput = document.getElementById('dateInput');
+        if (dateInput) dateInput.value = '';
+        var timeInput = document.getElementById('timeInput');
+        if (timeInput) timeInput.value = '';
+      }
+      else if (action === 'next-from-when'){ state.step = 'wishes'; render(); }
+      else if (action === 'next-from-wishes'){ state.step = 'confirm'; render(); }
+      else if (action === 'send'){ sendMail(); }
+      else if (action === 'copy'){ copyAnswer(); }
+    });
+
+    function bindValue(e){
+      var el = e.target.closest('[data-bind]');
+      if (!el) return;
+      state[el.dataset.bind] = el.value;
+    }
+    document.addEventListener('input', bindValue);
+    document.addEventListener('change', bindValue);
+
+    ticketNoEl.textContent = ticketNumber();
+    render();
+
+    var canvas = document.getElementById('bg');
+    var ctx = canvas.getContext('2d');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var particles = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    function initParticles(){
+      var count = Math.min(30, Math.floor(window.innerWidth / 40));
+      particles = [];
+      for (var i=0;i<count;i++){
+        particles.push({
+          x: Math.random()*canvas.width,
+          y: Math.random()*canvas.height,
+          r: 1 + Math.random()*2.4,
+          speed: 0.15 + Math.random()*0.3,
+          drift: (Math.random()-0.5)*0.2,
+          gold: Math.random() < 0.5,
+          alpha: 0.15 + Math.random()*0.25
+        });
+      }
+    }
+    window.addEventListener('resize', function(){ resize(); initParticles(); });
+    resize();
+    initParticles();
+
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for (var i=0;i<particles.length;i++){
+        var p = particles[i];
+        ctx.beginPath();
+        ctx.fillStyle = p.gold ? 'rgba(216,169,94,' + p.alpha + ')' : 'rgba(193,71,106,' + p.alpha + ')';
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+        p.y -= p.speed;
+        p.x += p.drift;
+        if (p.y < -10){ p.y = canvas.height + 10; p.x = Math.random()*canvas.width; }
+      }
+      if (!reduceMotion) requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+</script>
+</body>
+</html>
